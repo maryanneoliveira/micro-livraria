@@ -1,6 +1,7 @@
 const express = require('express');
 const shipping = require('./shipping');
 const inventory = require('./inventory');
+const coupon = require('./coupon');
 const cors = require('cors');
 
 const app = express();
@@ -37,6 +38,25 @@ app.get('/shipping/:cep', (req, res, next) => {
                     cep: req.params.cep,
                     value: data.value,
                 });
+            }
+        }
+    );
+});
+
+/**
+ * Valida um cupom de desconto no CouponService
+ */
+app.get('/coupon/:code', (req, res, next) => {
+    coupon.ValidateCoupon(
+        {
+            code: req.params.code,
+        },
+        (err, data) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send({ error: 'something failed :(' });
+            } else {
+                res.json(data);
             }
         }
     );

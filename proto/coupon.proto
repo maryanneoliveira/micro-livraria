@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+service CouponService {
+    rpc ValidateCoupon(CouponPayload) returns (CouponResponse) {}
+}
+
+message CouponPayload {
+    string code = 1;
+}
+
+message CouponResponse {
+    string code = 1;
+    bool valid = 2;
+    float discount = 3;
+    string message = 4;
+}
